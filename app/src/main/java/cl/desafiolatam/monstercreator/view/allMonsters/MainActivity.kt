@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import cl.desafiolatam.monstercreator.R
 import cl.desafiolatam.monstercreator.app.MonsterCreatorApplication
@@ -45,11 +44,11 @@ class MainActivity : AppCompatActivity() {
         rvMonsters.layoutManager = LinearLayoutManager(this)
         rvMonsters.adapter = adapter
 
-        viewModel.getAllMonsters().observe(this, Observer {monsters ->
+        viewModel.getAllMonsters().observe(this) { monsters ->
             monsters?.let {
                 adapter.updateMonster(it)
             }
-        })
+        }
 
         val temporaryMonsters = MonsterGenerator()
         monsterRepository.saveMonster(temporaryMonsters.generateMonster(MonsterAttributes(10,12,15),"Pepe",R.drawable.asset01))
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         monsterRepository.saveMonster(temporaryMonsters.generateMonster(MonsterAttributes(14,14,13),"Anita",R.drawable.asset03))
         monsterRepository.saveMonster(temporaryMonsters.generateMonster(MonsterAttributes(15,12,14),"Jose",R.drawable.asset04))
         monsterRepository.saveMonster(temporaryMonsters.generateMonster(MonsterAttributes(12,11,12),"Armando",R.drawable.asset05))
+        monsterRepository.saveMonster(temporaryMonsters.generateMonster(MonsterAttributes(13,13,13),"Claudio",R.drawable.asset02))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
